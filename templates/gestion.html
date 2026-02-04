@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <section>
+        <h2>🎬 Films</h2>
+        <div class="grid">
+            {% for t in films %}
+            <div class="card">
+                <div class="info">
+                    <span class="title">{{ t.clean_name }}</span>
+                    <span class="status {% if t.progress == 1 %}done{% endif %}">{{ (t.progress * 100)|int }}%</span>
+                </div>
+                <a href="/delete/{{ t.hash }}" class="delete-btn" onclick="return confirm('Supprimer ?')">🗑️</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <h2>📺 Séries</h2>
+        <div class="grid">
+            {% for t in series %}
+            <div class="card">
+                <div class="info">
+                    <span class="title">{{ t.clean_name }}</span>
+                    <span class="status {% if t.progress == 1 %}done{% endif %}">{{ (t.progress * 100)|int }}%</span>
+                </div>
+                <a href="/delete/{{ t.hash }}" class="delete-btn" onclick="return confirm('Supprimer ?')">🗑️</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="footer-action">
+        <button class="btn-small" onclick="document.getElementById('modal').style.display='block'">+ Ajouter manuellement</button>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+        <h3>Nouveau Torrent</h3>
+        <form action="/add" method="post">
+            <input type="text" name="magnet" placeholder="Lien Magnet" required>
+            <select name="category">
+                <option value="films">Film</option>
+                <option value="series">Séries</option> </select>
+            <button type="submit" class="btn-submit">Lancer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

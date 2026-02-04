@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>NetflixOS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <nav class="navbar">
+    <a href="/" class="logo">NETFLIX<span>OS</span></a>
+    
+    {% if request.path != '/' %}
+    <div class="nav-links">
+        <a href="/gestion" class="{{ 'active' if request.path == '/gestion' }}">Gestion</a>
+        <a href="/search" class="{{ 'active' if request.path == '/search' }}">Recherche</a>
+    </div>
+    {% endif %}
+</nav>
+
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

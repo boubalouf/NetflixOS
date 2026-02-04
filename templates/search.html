@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>🔍 Rechercher</h2>
+    <form action="/search" method="GET" class="search-form">
+        <input type="text" name="q" placeholder="Film, série..." required>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <div class="results-list">
+        {% for r in results %}
+        <div class="card">
+            <div class="info">
+                <div class="title-row">
+                    <span class="title">{{ r.Title }}</span>
+                    <span class="size-badge">💾 {{ (r.Size / 1024**3)|round(2) }} Go</span>
+                </div>
+                <button class="btn-info" onclick="showInfo('{{ r.Title|replace("'", "\\'") }}')">ℹ️ Info</button>
+            </div>
+            <form action="/add" method="POST" class="add-form">
+                <input type="hidden" name="magnet" value="{{ r.MagnetUri or r.Link }}">
+                <select name="category" class="cat-select">
+                    <option value="films">Film</option>
+                    <option value="series">Série</option>
+                </select>
+                <button type="submit" class="btn-download">⬇️</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeInfo()">&times;</span>
+        <div id="infoBody" class="info-grid"></div>
+    </div>
+</div>
+
+<script>
+function showInfo(title) {
+    const modal = document.getElementById('infoModal');
+    const body = document.getElementById('infoBody');
+    body.innerHTML = "<div style='color:white; padding:20px;'>Recherche dans les bases TMDB et IMDb...</div>";
+    modal.style.display = 'block';
+
+    fetch(`/get_info?title=${encodeURIComponent(title)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.error) {
+                body.innerHTML = "<p style='padding:20px;'>Aucune information trouvée sur TMDB ou OMDb.</p>";
+            } else {
+                body.innerHTML = `
+                    <img src="${data.poster || 'https://via.placeholder.com/500x750?text=No+Poster'}" class="info-poster">
+                    <div class="info-text">
+                        <h3>Résumé</h3><p>${data.description}</p>
+                        <h3>Casting</h3><p>${data.cast}</p>
+                        ${data.trailer ? `<h3>Bande-annonce</h3><iframe width="100%" height="350" src="${data.trailer}" frameborder="0" allowfullscreen></iframe>` : '<i>Pas de trailer disponible.</i>'}
+                    </div>`;
+            }
+        });
+}
+function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
+</script>
+{% endblock %}

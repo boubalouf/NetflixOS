@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="welcome-container">
+    <h2>Que voulez-vous faire aujourd'hui ?</h2>
+    
+    <div class="home-menu">
+        <a href="/search" class="home-card">
+            <div class="big-emoji">🔍</div>
+            <h3>Rechercher</h3>
+        </a>
+
+        <a href="/gestion" class="home-card">
+            <div class="big-emoji">📂</div>
+            <h3>Gestion</h3>
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+/* --- BASE --- */
+body { background-color: #141414; color: white; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; }
+.container { padding: 40px; }
+
+/* --- NAVBAR --- */
+.navbar { display: flex; justify-content: space-between; padding: 20px 50px; background: black; }
+.logo { color: #e50914; font-size: 28px; font-weight: 900; text-decoration: none; }
+.logo span { color: white; font-weight: 300; }
+.nav-links a { color: #aaa; text-decoration: none; margin-left: 20px; font-weight: bold; }
+.nav-links a.active { color: white; border-bottom: 2px solid #e50914; }
+
+/* --- ACCUEIL --- */
+.welcome-container { text-align: center; margin-top: 80px; }
+.home-menu { display: flex; justify-content: center; gap: 40px; margin-top: 50px; }
+.home-card { 
+    background: #181818; border: 1px solid #333; border-radius: 12px; 
+    padding: 50px; width: 220px; text-decoration: none; color: white; 
+    transition: 0.3s; display: flex; flex-direction: column; align-items: center; 
+}
+.home-card:hover { transform: translateY(-10px); border-color: #e50914; }
+.big-emoji { font-size: 5rem; margin-bottom: 20px; }
+
+/* --- RECHERCHE & CARTES --- */
+.search-form { display: flex; gap: 10px; margin-bottom: 30px; }
+.search-form input { flex: 1; padding: 15px; background: #333; border: none; color: white; border-radius: 4px; }
+.search-form button { background: #e50914; color: white; border: none; padding: 0 30px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+.card { 
+    background: #181818; padding: 20px; border-radius: 4px; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center; border: 1px solid #2f2f2f;
+}
+.title { font-weight: bold; }
+.btn-info { background: #444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+
+.title-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.size-badge {
+    color: #808080;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.add-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cat-select {
+    background: #222;
+    color: white;
+    border: 1px solid #444;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-download {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.btn-download:hover { transform: scale(1.2); }
+
+/* --- MODAL AVEC SCROLL --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+.modal-content { 
+    background: #181818; margin: 5vh auto; padding: 30px; width: 90%; max-width: 800px; 
+    border-radius: 8px; position: relative; max-height: 85vh; overflow-y: auto; 
+}
+.modal-content::-webkit-scrollbar { width: 8px; }
+.modal-content::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
+
+.info-grid { display: grid; grid-template-columns: 250px 1fr; gap: 30px; text-align: left; }
+.info-poster { width: 100%; border-radius: 8px; }
+.info-text h3 { color: #e50914; margin-top: 15px; }
+.close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: white; }
+
+/* --- LE BOUTON AJOUTER MANUELLEMENT (PAGE GESTION) --- */
+
+.footer-action { 
+    text-align: center; 
+    margin: 60px 0; 
+}
+
+.btn-small { 
+    background: transparent; 
+    color: #e5e5e5; 
+    border: 1px solid #808080; 
+    padding: 10px 25px; 
+    border-radius: 2px; /* Style rectangulaire Netflix */
+    cursor: pointer; 
+    font-size: 0.9rem; 
+    font-weight: bold;
+    text-transform: uppercase; /* Pour un look plus pro */
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover { 
+    background: #e5e5e5; /* Devient blanc au survol */
+    color: black;        /* Texte devient noir */
+    border-color: #e50914; /* Optionnel : une petite bordure rouge au survol */
+}
+
+/* --- ADAPTATION MOBILE --- */
+@media (max-width: 768px) {
+    /* Navbar plus compacte */
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+    }
+    .nav-links a {
+        margin: 0 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Accueil : on empile les cartes */
+    .home-menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .home-card {
+        width: 80%;
+        padding: 30px;
+    }
+
+    /* Page Recherche & Gestion : Cartes Pleine Largeur */
+    .container {
+        padding: 15px;
+    }
+    .card {
+        flex-direction: column; /* On empile le titre et le bouton téléchargement */
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .add-form {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    /* La Barre de recherche prend toute la place */
+    .search-form {
+        flex-direction: column;
+    }
+    .search-form button {
+        padding: 15px;
+    }
+
+    /* Modal (Pop-up Info) mobile */
+    .modal-content {
+        width: 95%;
+        margin: 2vh auto;
+        padding: 15px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr; /* Image au dessus du texte */
+        text-align: center;
+    }
+    .info-poster {
+        max-width: 180px;
+        margin: 0 auto;
+    }
+}
+
+.title {
+    word-break: break-word; /* Évite que le texte sorte de l'écran */
+    font-size: 1rem;
+}
+
+/* On rend les boutons de suppression et téléchargement plus gros sur mobile */
+@media (max-width: 768px) {
+    .btn-download, .btn-delete {
+        padding: 10px;
+        background: #222;
+        border-radius: 5px;
+    }
+}
