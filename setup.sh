@@ -13,7 +13,7 @@ read -p "🔑 Clé OMDB : " OMDB
 read -p "🔐 Mot de passe qBittorrent : " PASS
 
 echo "🚀 Lancement de Docker..."
-docker-compose up -d --build
+docker compose up --build
 
 echo ""
 echo "----------------------------------------------------"
@@ -43,7 +43,7 @@ QB_PASS=$PASS
 JELLY_KEY=$JELLY_API
 EOF
 
-docker-compose restart netflixos
+docker compose restart netflixos
 
 echo ""
 echo "----------------------------------------------------"
