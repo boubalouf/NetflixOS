@@ -6,13 +6,13 @@ from flask import Flask, request, render_template, redirect, jsonify
 app = Flask(__name__)
 
 # --- CONFIGURATION (Via Variables d'Environnement Docker) ---
-QB_URL = "http://qbittorrent:8080"
-JACKETT_URL = "http://jackett:9117"
+QB_URL = "http://localhost:8080"
+JACKETT_URL = "http://localhost:9117"
 QB_USER = "admin"
-QB_PASS = os.getenv('QB_PASS')
-TMDB_KEY = os.getenv('TMDB_KEY')
-OMDB_KEY = os.getenv('OMDB_KEY')
-JACKETT_API_KEY = os.getenv('JACKETT_KEY')
+QB_PASS = "pFcMKPrfA"
+TMDB_KEY = "03f70a772d3651326d5477702082cd7a"
+OMDB_KEY = "a3cfb539"
+JACKETT_API_KEY = "wf2j84brb1cok9s74s6cnqho1lwkfbyy"
 
 def get_qbit_session():
     session = requests.Session()
@@ -49,8 +49,7 @@ def add_torrent():
     category = request.form.get('category') # 'films' ou 'series'
     session = get_qbit_session()
     
-    # On force le dossier Docker partagé
-    save_path = f"/media/{category}"
+    save_path = f"/home/timofei/downloads/{category}"
     
     payload = {
         'urls': magnet_link, 
@@ -59,7 +58,6 @@ def add_torrent():
     }
     session.post(f"{QB_URL}/api/v2/torrents/add", data=payload)
     return redirect('/gestion')
-
 @app.route('/delete/<hash>')
 def delete_torrent(hash):
     session = get_qbit_session()
