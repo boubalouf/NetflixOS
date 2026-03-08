@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h2>⚙️ Réglages</h2>
+
+    <div class="settings-section">
+        <h3>Actions Système</h3>
+        <p>Attention, ces actions peuvent interrompre les services et ne doivent être utilisées qu'en connaissance de cause.</p>
+
+        <div class="settings-actions">
+            <form action="/restart_service" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir redémarrer le service NetflixOS ?');">
+                <button type="submit" class="btn-action btn-warning">Redémarrer NetflixOS</button>
+            </form>
+
+            <form action="/shutdown_server" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir éteindre COMPLÈTEMENT le serveur ? Cette action est irréversible.');">
+                <button type="submit" class="btn-action btn-danger">Éteindre le serveur</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="settings-section">
+    <h3>Configuration API & Services</h3>
+    <p>Modifiez les clés API et les URLs des services.</p>
+    
+    <form action="/settings/update" method="POST" class="settings-form">
+        <div class="form-group">
+            <label>qBittorrent URL</label>
+            <input type="text" name="QB_URL" value="{{ config['QB_URL'] }}" placeholder="ex: http://localhost:8080">
+        </div>
+        <div class="form-group">
+            <label>qBittorrent User</label>
+            <input type="text" name="QB_USER" value="{{ config['QB_USER'] }}" placeholder="ex: admin">
+        </div>
+        <div class="form-group">
+            <label>qBittorrent Password</label>
+            <input type="text" name="QB_PASS" value="{{ config['QB_PASS'] }}" placeholder="ex: adminadmin">
+        </div>
+        <div class="form-group">
+            <label>Jackett URL</label>
+            <input type="text" name="JACKETT_URL" value="{{ config['JACKETT_URL'] }}" placeholder="ex: http://localhost:9117">
+        </div>
+        <div class="form-group">
+            <label>Jackett API Key</label>
+            <input type="text" name="JACKETT_API_KEY" value="{{ config['JACKETT_API_KEY'] }}" placeholder="Clé API Jackett">
+        </div>
+        <div class="form-group">
+            <label>TMDB API Key</label>
+            <input type="text" name="TMDB_KEY" value="{{ config['TMDB_KEY'] }}" placeholder="Clé API TMDB">
+        </div>
+        <div class="form-group">
+            <label>OMDB API Key</label>
+            <input type="text" name="OMDB_KEY" value="{{ config['OMDB_KEY'] }}" placeholder="Clé API OMDB">
+        </div>
+        
+        <div style="grid-column: 1 / -1; text-align: right;">
+            <button type="submit" class="btn-action btn-danger">Enregistrer les modifications</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

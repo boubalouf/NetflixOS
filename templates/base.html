@@ -14,7 +14,8 @@
     {% if request.path != '/' %}
     <div class="nav-links">
         <a href="/gestion" class="{{ 'active' if request.path == '/gestion' }}">Gestion</a>
-        <a href="/search" class="{{ 'active' if request.path == '/search' }}">Recherche</a>
+        <a href="/search" class="{{ 'active' if request.path.startswith('/search') }}">Recherche</a>
+        <a href="/settings" class="{{ 'active' if request.path == '/settings' }}">Réglages</a>
         <a href="http://192.168.1.181:8096/web/" target="_blank">Jellyfin</a>
     </div>
     {% endif %}
